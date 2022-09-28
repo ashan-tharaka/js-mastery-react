@@ -1,40 +1,82 @@
+import React, { useEffect, useState } from "react";
+import   './App.css';
+import SearchIcon from './Search.svg';
+import MovieCard from './MovieCard';
 
-import { useEffect, useState } from 'react';
-import './App.css';
-const Person=(props)=>{
-  return(
-    <>
-    <h1>First Name:{props.fname}</h1>
-    <h2>Last Name:Tharaka</h2>
 
-    </>
-  )
+const API_KEY="http://www.omdbapi.com?apiKey=acdb250e";
+
+const movie1={
+    "Title":"Amazing Spiderman Syndrome",
+    "Year":"2021",
+    "imdbID":"tt123333",
+    "Type":"movie",
+    "Poster":"N/A"
+
 }
 
-const App=()=> {
-  useEffect(()=>{
-   alert("You changed the counter to"+counter);
+const App=()=>{
+    const [movies,setMovies]=useState([]);
+    const [searchTerm,setSearchTerm]=useState('');
+    
+
+        const searchMovies=async(title)=>{
+        const response=await fetch(`${API_KEY}&s=`)
+        const data=await response.json();
+        console.log(data.Search);
+
+        
+
+    }
+    useEffect(()=>{
+         searchMovies('Spiderman');
+
+
+    },[]);
+
+    return (
+        <div className="app">
+            <h1>
+                MovieLand
+            </h1>
+            <div className="search">
+                <input placeholder="Search for movies"
+                value="Superman"
+                onChange={()=>{
+
+                }}/>
+                <img src={SearchIcon}
+                alt="search" onClick={()=>{}}
+                />
 
 
 
+            </div>
+            {
+                movies?.length>0
+                ?(
+                    <div className="container">
+                  {
+                    movies.map((movie)=>(
+                        <MovieCard movie={movie}/>
 
-  },[counter]);
-    const name='ashan';
-  const isNameShowing=true;
-  const [counter,setCounter]=useState(0);
+                    ))
+                  }
+                
+                </div>
+                ):(
+<div className="empty">
+    <h2>No movies found</h2>
+</div>
+
+                )
+
+            }
+
+        </div>
+    )
+};
 
 
-
-  return (
-    <div className="App">
-      <button onClick={()=>setCounter((prev)=>prev-1)}>-</button>
-      <button>{counter}</button>
-      <button onClick={()=>setCounter((prev)=>prev+1)}>+</button>
-
-
-
-    </div>
-  );
-}
 
 export default App;
